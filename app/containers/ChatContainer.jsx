@@ -16,9 +16,15 @@ class ChatContainer extends Component {
   }
 
   render() {
+    var divStyle = {
+      backgroundColor: '#D3D3D3',
+      display: 'block',
+      height: '600px'
+    }
+
     return(
-      <div className="container jumbotron">
-        <h3>This is the chat container</h3>
+      <div className="container" style={divStyle}>
+        <h3>Welcome to the chat!</h3>
         <div className="row">
               <div className="col-sm-9">
                 <Messages/>
@@ -26,11 +32,9 @@ class ChatContainer extends Component {
               <div className="col-sm-3">
                 <Participants/>
               </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <Post/>
-          </div>
+              <div className="col-sm-9">
+                <Post/>
+              </div>
         </div>
       </div>
     );

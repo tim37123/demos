@@ -6,9 +6,18 @@ export default class Post extends Component {
 	}
 
   render() {
+    var divStyle = {
+      display: 'block',
+      border: 'solid',
+      height: '40px',
+      borderWidth: '3px',
+      borderRadius: '5px',
+      marginTop: '-40px',
+      backgroundColor: '#F8F8FF'
+    };
     return(
-      <div>
-        This is the post component.
+      <div style={divStyle}>
+          <input type="text" className="form-control"/>
       </div>
     );
   }
