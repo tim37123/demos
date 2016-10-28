@@ -1,7 +1,11 @@
 import { takeEvery, delay } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
 import Firebaseutils from './utils/firebaseUtils';
+import rtcUtils from './utils/rtcUtils';
 
+/*
+*********************************************************************** TODOs
+*/
 export function* watchAddTodo(){
 	yield* takeEvery('ADD_TODO_ASYNC', addTodoAsync)
 }
@@ -11,10 +15,12 @@ export function* addTodoAsync(action){
 	yield put({type: 'addTodo', todo: action.todo})
 }
 
+/*
+*********************************************************************** Registration
+*/
 export function* watchSetUser(){
 	yield* takeEvery('SET_USER_ASYNC', setUser)
 }
-
 
 export function* setUser(action){
 	yield put({type: 'SET_USER', user: action.user})
@@ -58,6 +64,28 @@ export function* login(action){
 	      : yield put({type: 'LOGIN', user});
 }
 
+/*
+*********************************************************************** RTC
+*/
+export function* watchPeerConnect(){
+    yield* takeEvery('PEER_CONNECT_ASYNC', peerConnect)
+}
+
+export function* peerConnect(){
+    let peerConnection = rtcUtils.buildPeerConnection();
+    let dataConnection = rtcUtils.buildDataConnection(peerConnection);
+    yield put({type: "SET_PEER_CONNECTION", connection: {peerConnection: peerConnection, dataConnection: dataConnection}})
+}
+
+export function* watchGetUserAgent(){
+    yield* takeEvery('GET_USER_AGENT_ASYNC', getUserAgent)
+}
+
+export function* getUserAgent(){
+    let UA = rtcUtils.createUserAgent();
+    yield put({type: 'SET_USER_AGENT', agent: UA})
+}
+
 export default function* rootSaga() {
   yield [
     watchAddTodo(),
@@ -65,6 +93,8 @@ export default function* rootSaga() {
     watchLogout(),
     watchSetUser(),
     watchClearUser(),
-    watchLogin()
+    watchLogin(),
+    watchPeerConnect(),
+    watchGetUserAgent()
   ]
 }

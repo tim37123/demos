@@ -15,6 +15,19 @@ class ChatContainer extends Component {
       }
   }
 
+  getUserAgent(){
+    this.props.dispatch({type:'GET_USER_AGENT_ASYNC'})
+  }
+
+  getPeerConnection(){
+    this.props.dispatch({type:'PEER_CONNECT_ASYNC'})
+  }
+
+  getDataConnection(){
+    let dataConnectData = rtc.buildDataConnection()
+    console.log('Get Data Connection') 
+  }
+
   render() {
     var divStyle = {
       backgroundColor: '#D3D3D3',
@@ -25,6 +38,8 @@ class ChatContainer extends Component {
     return(
       <div className="container" style={divStyle}>
         <h3>Welcome to the chat!</h3>
+        <button onClick={this.getPeerConnection.bind(this)}>Peer</button>
+        <button onClick={this.getUserAgent.bind(this)}>GetUserAgent</button>
         <div className="row">
               <div className="col-sm-9">
                 <Messages/>

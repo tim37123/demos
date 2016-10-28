@@ -24,7 +24,8 @@ module.exports = {
 			test: /\.jsx?$/, 
 			loaders: ['react-hot', 'babel'], 
 			include: path.join(__dirname, 'app') 
-		}]
+		},
+		{ test: /\.json$/, loader: "json-loader" }]
 	},
 	//Add the got module replacement plugin
 	plugins: [

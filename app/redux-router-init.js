@@ -13,6 +13,7 @@ import rootSaga from './sagas';
 import todoReducer from './reducers/todos';
 import routerReducer from './reducers/router-reducer';
 import registrationReducer from './reducers/registration';
+import rtcReducer from './reducers/rtc_reducer';
 
 ////////////////////////////////////////////////
 
@@ -23,7 +24,8 @@ import registrationReducer from './reducers/registration';
 const rootReducer = combineReducers({
     todos: todoReducer,
     routing: routerReducer,
-    registration: registrationReducer
+    registration: registrationReducer,
+    rtcReducer: rtcReducer
 })
 
 // const initialState = Immutable.List(['Code More!']);
