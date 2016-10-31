@@ -1,4 +1,5 @@
 import SIP from 'sip.js';
+
 // var pc = new RTCPeerConnection(servers,{optional: [{RtpDataChannels: true}]});
 
 function createPeerConnection(){
@@ -57,10 +58,10 @@ function onSendChannelStateChange(){
 }
 
 export default{
-	createUserAgent: () => {
+	createUserAgent: (reg_name) => {
 		var config = {
 		  // Replace this IP address with your FreeSWITCH IP address
-		  uri: '1000@192.168.1.215',
+		  uri: reg_name + '@192.168.1.215',
 
 		  // Replace this IP address with your FreeSWITCH IP address
 		  // and replace the port with your FreeSWITCH port
@@ -73,7 +74,14 @@ export default{
 		  password: '1234'
 		};
 
-		return new SIP.UA(config);
+		let userAgent = new SIP.UA(config)
+
+		//Kill registration if you leave the page
+		window.onbeforeunload = (e) => {
+			userAgent.stop()
+		}
+		
+		return userAgent;
 	},
 
 	buildPeerConnection: () => {

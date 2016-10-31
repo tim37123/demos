@@ -1,11 +1,12 @@
 import firebase from 'firebase';
-import {FIREBASE_CONFIG} from './firebaseConfig';
+import {FIREBASE_AUTH_CONFIG, FIREBASE_CHAT_CONFIG} from './firebaseConfig';
 
-export const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
-export const firebaseAuth = firebaseApp.auth();
+const firebaseAuthApp = firebase.initializeApp(FIREBASE_AUTH_CONFIG, 'Auth');
+const firebaseAuth    = firebaseAuthApp.auth();
 
+const firebaseMsgApp  = firebase.initializeApp(FIREBASE_CHAT_CONFIG, 'Chat');
 
-export default {
+export const Auth = {
 	registerUser: creds => {
 	    return firebaseAuth.createUserWithEmailAndPassword(creds.email, creds.password)
 	    .then(user => ({user}))
@@ -27,4 +28,8 @@ export default {
 				.then(success => ({success}))
 	    		.catch(error => ({error}))
 	}
+}
+
+export const Msgs = {
+
 }
