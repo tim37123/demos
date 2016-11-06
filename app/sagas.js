@@ -93,8 +93,22 @@ export function* getUserAgent(login_obj){
     const email = login_obj.user.email;
     const sip_reg_name = email.substr(0, email.indexOf('@'));
     let UA = rtcUtils.createUserAgent(sip_reg_name);
-    yield put({type: 'SET_USER_AGENT', agent: UA})
+    yield put({type: 'SET_USER_AGENT', agent: UA});
+    // yield put({type: 'SET_PARTICIPANT_ASYNC', participant: sip_reg_name})
 }
+
+/*
+*********************************************************************** Chat
+*/
+// export function* watchSetParticipant(){
+//     yield* takeEvery('SET_PARTICIPANT_ASYNC', setParticipant)
+// }
+
+// export function* setParticipant(action){
+//     Chat.addParticipant(action);
+//     yield put(type: 'SET_PARTICIPANT', todo: action);
+// }
+
 
 export default function* rootSaga() {
   yield [

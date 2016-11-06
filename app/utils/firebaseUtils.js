@@ -3,7 +3,6 @@ import {FIREBASE_AUTH_CONFIG, FIREBASE_CHAT_CONFIG} from './firebaseConfig';
 
 const firebaseAuthApp = firebase.initializeApp(FIREBASE_AUTH_CONFIG, 'Auth');
 const firebaseAuth    = firebaseAuthApp.auth();
-
 const firebaseMsgApp  = firebase.initializeApp(FIREBASE_CHAT_CONFIG, 'Chat');
 
 export const Auth = {
@@ -30,6 +29,9 @@ export const Auth = {
 	}
 }
 
-export const Msgs = {
-
-}
+// export const Chat = {
+// 	let database = firebaseMsgApp.database()
+// 	addParticipant: participant => {
+// 		database.ref('participants/').push(participant)
+// 	}
+// }
