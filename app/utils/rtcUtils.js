@@ -59,23 +59,24 @@ function onSendChannelStateChange(){
 
 export default{
 	createUserAgent: (reg_name) => {
-		var config = {
-		  // Replace this IP address with your FreeSWITCH IP address
-		  uri: reg_name + '@192.168.1.215',
+		// var config = {
+		//   // Replace this IP address with your FreeSWITCH IP address
+		//   uri: reg_name + '@192.168.1.215',
 
-		  // Replace this IP address with your FreeSWITCH IP address
-		  // and replace the port with your FreeSWITCH port
-		  ws_servers: 'ws://192.168.1.215:5066',
+		//   // Replace this IP address with your FreeSWITCH IP address
+		//   // and replace the port with your FreeSWITCH port
+		//   ws_servers: 'ws://192.168.1.215:5066',
 
-		  // FreeSWITCH Default Username
-		  authorizationUser: '1000',
+		//   // FreeSWITCH Default Username
+		//   authorizationUser: '1000',
 
-		  // FreeSWITCH Default Password
-		  password: '1234'
-		};
-
-		let userAgent = new SIP.UA(config)
-
+		//   // FreeSWITCH Default Password
+		//   password: '1234'
+		// };
+		let user = reg_name + '@tim37123.onsip.com';
+		console.log('TYPE');
+		console.log(typeof(user));
+		let userAgent = new SIP.UA(user)
 		//Kill registration if you leave the page
 		window.onbeforeunload = (e) => {
 			userAgent.stop()

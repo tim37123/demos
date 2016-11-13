@@ -14,6 +14,7 @@ import todoReducer from './reducers/todos';
 import routerReducer from './reducers/router-reducer';
 import registrationReducer from './reducers/registration';
 import rtcReducer from './reducers/rtc_reducer';
+import chatReducer from './reducers/chat_reducer';
 
 ////////////////////////////////////////////////
 
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     todos: todoReducer,
     routing: routerReducer,
     registration: registrationReducer,
-    rtcReducer: rtcReducer
+    rtcReducer: rtcReducer,
+    chat: chatReducer
 })
 
 // const initialState = Immutable.List(['Code More!']);

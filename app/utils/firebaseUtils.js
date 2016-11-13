@@ -1,9 +1,9 @@
 import firebase from 'firebase';
 import {FIREBASE_AUTH_CONFIG, FIREBASE_CHAT_CONFIG} from './firebaseConfig';
 
-const firebaseAuthApp = firebase.initializeApp(FIREBASE_AUTH_CONFIG, 'Auth');
-const firebaseAuth    = firebaseAuthApp.auth();
-const firebaseMsgApp  = firebase.initializeApp(FIREBASE_CHAT_CONFIG, 'Chat');
+const firebaseRef	  = firebase.initializeApp(FIREBASE_AUTH_CONFIG);
+const firebaseAuth    = firebaseRef.auth();
+const firebaseDB	  = firebaseRef.database();
 
 export const Auth = {
 	registerUser: creds => {
@@ -29,9 +29,17 @@ export const Auth = {
 	}
 }
 
-// export const Chat = {
-// 	let database = firebaseMsgApp.database()
-// 	addParticipant: participant => {
-// 		database.ref('participants/').push(participant)
-// 	}
-// }
+export const Chat = {
+	addParticipant: participant => {
+		var newParticipant = {};
+		newParticipant['/participants/' + participant.user.uid] = participant.user.email;
+		return firebaseDB.ref().update(newParticipant);
+	},
+	addParticipant: participant => {
+		firebaseDB.ref('participants').child(participant.user.uid).remove();
+	},
+	watchParticipants: () => {
+		var partipantRef = firebase.database().ref('participants/');
+		return partipantRef;
+	}
+}

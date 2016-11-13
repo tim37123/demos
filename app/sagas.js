@@ -1,6 +1,6 @@
 import { takeEvery, delay } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
-import {Auth} from './utils/firebaseUtils';
+import {Auth, Chat} from './utils/firebaseUtils';
 import rtcUtils from './utils/rtcUtils';
 
 /*
@@ -45,15 +45,17 @@ export function* register(action){
 }
 
 export function* watchLogout(){
-    console.log('watchlogout called');
 	yield* takeEvery('LOGOUT_USER_ASYNC', logout)
 }
 
-export function* logout(){
-    console.log('logout called');
+export function* logout(action){
     const {error, success} = yield call(Auth.logout);
-    error ? yield put({type: 'LOGOUT_FAILED', message: {msg_type: 'error', msg_body: error.message}})
-	      : yield put({type: 'LOGOUT'});
+    if(error){
+        yield put({type: 'LOGOUT_FAILED', message: {msg_type: 'error', msg_body: error.message}})
+    }else{
+        yield put({type: 'DELETE_PARTICIPANT_ASYNC', action});
+        yield put({type: 'LOGOUT'});
+    }
 }
 
 export function* watchLogin(){
@@ -62,53 +64,71 @@ export function* watchLogin(){
 
 export function* login_and_register(action){
     const {error, user} = yield call(Auth.login,action.creds);
-    console.log('USER IS: ');
-    console.log(user);
     if(error){
         yield put({type: 'LOGIN_FAILED', message: {msg_type: 'error', msg_body: error.message}})
     }else{
         yield put({type: 'LOGIN', user});
-        yield put({type: 'GET_USER_AGENT_ASYNC', user})
+        // yield put({type: 'GET_USER_AGENT_ASYNC', user})
+        yield put({type: 'ADD_PARTICIPANT_ASYNC', user})
     }
 }
 
 /*
 *********************************************************************** RTC
 */
-export function* watchPeerConnect(){
-    yield* takeEvery('PEER_CONNECT_ASYNC', peerConnect)
-}
+// export function* watchPeerConnect(){
+//     yield* takeEvery('PEER_CONNECT_ASYNC', peerConnect)
+// }
 
-export function* peerConnect(){
-    let peerConnection = rtcUtils.buildPeerConnection();
-    let dataConnection = rtcUtils.buildDataConnection(peerConnection);
-    yield put({type: "SET_PEER_CONNECTION", connection: {peerConnection: peerConnection, dataConnection: dataConnection}})
-}
+// export function* peerConnect(){
+//     let peerConnection = rtcUtils.buildPeerConnection();
+//     let dataConnection = rtcUtils.buildDataConnection(peerConnection);
+//     yield put({type: "SET_PEER_CONNECTION", connection: {peerConnection: peerConnection, dataConnection: dataConnection}})
+// }
 
-export function* watchGetUserAgent(){
-    yield* takeEvery('GET_USER_AGENT_ASYNC', getUserAgent)
-}
+// export function* watchGetUserAgent(){
+//     yield* takeEvery('GET_USER_AGENT_ASYNC', getUserAgent)
+// }
 
-export function* getUserAgent(login_obj){
-    const email = login_obj.user.email;
-    const sip_reg_name = email.substr(0, email.indexOf('@'));
-    let UA = rtcUtils.createUserAgent(sip_reg_name);
-    yield put({type: 'SET_USER_AGENT', agent: UA});
-    // yield put({type: 'SET_PARTICIPANT_ASYNC', participant: sip_reg_name})
-}
+// export function* getUserAgent(login_obj){
+//     const email = login_obj.user.email;
+//     const sip_reg_name = email.substr(0, email.indexOf('@'));
+//     let UA = rtcUtils.createUserAgent(sip_reg_name);
+//     yield put({type: 'SET_USER_AGENT', agent: UA});
+//     // yield put({type: 'SET_PARTICIPANT_ASYNC', participant: sip_reg_name})
+// }
 
 /*
 *********************************************************************** Chat
 */
-// export function* watchSetParticipant(){
-//     yield* takeEvery('SET_PARTICIPANT_ASYNC', setParticipant)
-// }
 
-// export function* setParticipant(action){
-//     Chat.addParticipant(action);
-//     yield put(type: 'SET_PARTICIPANT', todo: action);
-// }
+export function* watchAddParticipant(){
+    yield* takeEvery('ADD_PARTICIPANT_ASYNC', addParticipant)
+}
 
+export function* addParticipant(participant){
+    Chat.addParticipant(participant);
+    yield put({type: 'ADD_PARTICIPANT', participant: participant});
+}
+
+export function* watchDeleteParticipant(){
+    yield* takeEvery('DELETE_PARTICIPANT_ASYNC', deleteParticipant)
+}
+
+export function* deleteParticipant(participant){
+    console.log('deleteParticipant Called')
+    Chat.deleteParticipant(participant);
+    yield put({type: 'DELETE_PARTICIPANT'});
+}
+
+export function* watchUpdateParticipents(){
+    yield* takeEvery('UPDATE_PARTICIPANTS_ASYNC', updateParticipants);
+}
+
+export function* updateParticipants(participantList){
+    console.log('participants changed');
+    yield put({type: 'UPDATE_PARTICIPANTS', participants: participantList});   
+}
 
 export default function* rootSaga() {
   yield [
@@ -118,7 +138,10 @@ export default function* rootSaga() {
     watchSetUser(),
     watchClearUser(),
     watchLogin(),
-    watchPeerConnect(),
-    watchGetUserAgent()
+    watchAddParticipant(),
+    watchDeleteParticipant(),
+    watchUpdateParticipents(),
+    // watchPeerConnect(),
+    // watchGetUserAgent()
   ]
 }

@@ -1,8 +1,6 @@
 import Immutable from 'immutable'
 
 export default (state = Immutable.Map({}), action) => {
-  console.log('reducer called')
-  console.log(action)
   switch(action.type) {
     case "SET_USER":
     	return Immutable.fromJS({user: {email: action.user.email, uid: action.user.uid}})

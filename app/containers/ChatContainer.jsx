@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Messages from '../components/chat/Messages';
 import Participants from '../components/chat/Participants';
 import Post from '../components/chat/Post';
+import {Chat} from '../utils/firebaseUtils';
 
 class ChatContainer extends Component {
 	constructor(props){
@@ -12,6 +13,8 @@ class ChatContainer extends Component {
   componentWillMount(){
   	if(!this.props.user){
         this.props.history.pushState(null, `/`);
+      }else{
+        this.watchParticipantsChanged()
       }
   }
 
@@ -21,6 +24,17 @@ class ChatContainer extends Component {
 
   getPeerConnection(){
     this.props.dispatch({type:'PEER_CONNECT_ASYNC'})
+  }
+
+  // This is a hack but sagas sucks at dealing with event listeners. Need to implement this style to do it by the book: 
+  // http://stackoverflow.com/questions/34859932/can-i-use-redux-sagas-es6-generators-as-onmessage-listener-for-websockets-or-ev/34866840?noredirect=1#comment57501919_34866840
+  // or look at firebase-sagas that may have a library to solve this
+  watchParticipantsChanged(){
+    let participantsListener = Chat.watchParticipants();
+    participantsListener.on('value', (snapshot) => {
+      this.props.dispatch({type:'UPDATE_PARTICIPANTS_ASYNC', participants: snapshot})
+    });
+    console.log('Participants listener activated');
   }
 
   getDataConnection(){
