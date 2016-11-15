@@ -116,8 +116,7 @@ export function* watchDeleteParticipant(){
 }
 
 export function* deleteParticipant(participant){
-    console.log('deleteParticipant Called')
-    Chat.deleteParticipant(participant);
+    Chat.deleteParticipant(participant.action.action);
     yield put({type: 'DELETE_PARTICIPANT'});
 }
 
@@ -126,7 +125,6 @@ export function* watchUpdateParticipents(){
 }
 
 export function* updateParticipants(participantList){
-    console.log('participants changed');
     yield put({type: 'UPDATE_PARTICIPANTS', participants: participantList});   
 }
 

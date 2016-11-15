@@ -35,11 +35,11 @@ export const Chat = {
 		newParticipant['/participants/' + participant.user.uid] = participant.user.email;
 		return firebaseDB.ref().update(newParticipant);
 	},
-	addParticipant: participant => {
-		firebaseDB.ref('participants').child(participant.user.uid).remove();
+	deleteParticipant: participant => {
+		firebaseDB.ref('participants/' + participant.uid).remove();
 	},
 	watchParticipants: () => {
 		var partipantRef = firebase.database().ref('participants/');
 		return partipantRef;
-	}
+	},
 }

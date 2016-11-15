@@ -8,7 +8,9 @@ export class Navbar extends Component {
 	}
 
 	logout(){
-		this.props.dispatch({type: 'LOGOUT_USER_ASYNC', action: this.props.registration});
+		console.log('USER');
+		console.log(this.props.user);
+		this.props.dispatch({type: 'LOGOUT_USER_ASYNC', action: this.props.user});
 	}
 
 	render(){
