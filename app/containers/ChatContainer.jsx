@@ -11,10 +11,11 @@ class ChatContainer extends Component {
 	}
 
   componentWillMount(){
-  	if(!this.props.user){
+  	if(!this.props.registration.user){
         this.props.history.pushState(null, `/`);
       }else{
-        this.watchParticipantsChanged()
+        const participantRef = Chat.getParticipantsRef()
+        this.watchParticipantsChanged(participantRef)
       }
   }
 
@@ -29,17 +30,17 @@ class ChatContainer extends Component {
   // This is a hack but sagas sucks at dealing with event listeners. Need to implement this style to do it by the book: 
   // http://stackoverflow.com/questions/34859932/can-i-use-redux-sagas-es6-generators-as-onmessage-listener-for-websockets-or-ev/34866840?noredirect=1#comment57501919_34866840
   // or look at firebase-sagas that may have a library to solve this
-  watchParticipantsChanged(){
-    let participantsListener = Chat.watchParticipants();
-    participantsListener.on('value', (snapshot) => {
-      this.props.dispatch({type:'UPDATE_PARTICIPANTS_ASYNC', participants: snapshot})
+  watchParticipantsChanged(participantsRef){
+    participantsRef.on('value', (snapshot) => {
+      console.log('in the participants listener');
+      this.props.dispatch({type:'UPDATE_PARTICIPANTS_ASYNC', participants: snapshot.val()})
     });
     console.log('Participants listener activated');
   }
 
   getDataConnection(){
     let dataConnectData = rtc.buildDataConnection()
-    console.log('Get Data Connection') 
+    console.log('Getting RTC Data Connection') 
   }
 
   render() {
@@ -59,7 +60,7 @@ class ChatContainer extends Component {
                 <Messages/>
               </div>
               <div className="col-sm-3">
-                <Participants/>
+                <Participants participantList={this.props.chat.participants} />
               </div>
               <div className="col-sm-9">
                 <Post/>
@@ -71,7 +72,10 @@ class ChatContainer extends Component {
 }
 
 function mapStateToProps(state){
-	return state.get('registration').toJS()
+	// return state.get('registration').toJS()
+  const registration = state.get('registration').toJS()
+  const chat = state.get('chat').toJS()
+  return {registration, chat}
 }
 
 export default connect(mapStateToProps)(ChatContainer);

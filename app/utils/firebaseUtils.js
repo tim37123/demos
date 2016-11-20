@@ -38,7 +38,7 @@ export const Chat = {
 	deleteParticipant: participant => {
 		firebaseDB.ref('participants/' + participant.uid).remove();
 	},
-	watchParticipants: () => {
+	getParticipantsRef: () => {
 		var partipantRef = firebase.database().ref('participants/');
 		return partipantRef;
 	},
