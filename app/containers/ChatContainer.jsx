@@ -27,6 +27,11 @@ class ChatContainer extends Component {
     this.props.dispatch({type:'PEER_CONNECT_ASYNC'})
   }
 
+  addMessage(msg){
+    const chatMessage = {body: msg, timestamp: Date.now(), poster: this.props.registration.user.email}
+    this.props.dispatch({type: 'ADD_MESSAGE_ASYNC', msg: chatMessage})
+  }
+
   // This is a hack but sagas sucks at dealing with event listeners. Need to implement this style to do it by the book: 
   // http://stackoverflow.com/questions/34859932/can-i-use-redux-sagas-es6-generators-as-onmessage-listener-for-websockets-or-ev/34866840?noredirect=1#comment57501919_34866840
   // or look at firebase-sagas that may have a library to solve this
@@ -63,7 +68,7 @@ class ChatContainer extends Component {
                 <Participants participantList={this.props.chat.participants} />
               </div>
               <div className="col-sm-9">
-                <Post/>
+                <Post addMessage={this.addMessage.bind(this)}/>
               </div>
         </div>
       </div>

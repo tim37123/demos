@@ -5,6 +5,13 @@ export default class Post extends Component {
 		super(props);
 	}
 
+  sendMessage(e){
+    if(e.keyCode == 13){
+      this.props.addMessage(e.target.value);
+      e.target.value = '';
+    }
+  }
+
   render() {
     var divStyle = {
       display: 'block',
@@ -15,9 +22,10 @@ export default class Post extends Component {
       marginTop: '-40px',
       backgroundColor: '#F8F8FF'
     };
+
     return(
       <div style={divStyle}>
-          <input type="text" className="form-control"/>
+          <input type="text" className="form-control" onKeyDown={this.sendMessage.bind(this)}/>
       </div>
     );
   }

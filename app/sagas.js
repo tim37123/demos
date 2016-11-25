@@ -128,6 +128,15 @@ export function* updateParticipants(participantList){
     yield put({type: 'UPDATE_PARTICIPANTS', participants: participantList});   
 }
 
+export function* watchAddMessage(){
+    yield* takeEvery('ADD_MESSAGE_ASYNC', addMessage)
+}
+
+export function* addMessage(message){
+    Chat.addMessage(message);
+    yield put({type: 'ADD_MESSAGE', message: message});
+}
+
 export default function* rootSaga() {
   yield [
     watchAddTodo(),
@@ -139,6 +148,7 @@ export default function* rootSaga() {
     watchAddParticipant(),
     watchDeleteParticipant(),
     watchUpdateParticipents(),
+    watchAddMessage(),
     // watchPeerConnect(),
     // watchGetUserAgent()
   ]

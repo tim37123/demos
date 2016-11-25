@@ -27,7 +27,7 @@ export default class Participants extends Component {
     };
 
     const participants = Object.keys(this.props.participantList).map((participant, index) =>
-                            <li style={listStyle}>{this.props.participantList[participant]}</li>
+                            <li style={listStyle} key={participant}>{this.props.participantList[participant]}</li>
                           );
 
     return(

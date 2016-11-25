@@ -42,4 +42,8 @@ export const Chat = {
 		var partipantRef = firebase.database().ref('participants/');
 		return partipantRef;
 	},
+	addMessage: message => {
+		const messageRef = firebaseDB.ref('messages/');
+		return messageRef.push(message.msg);
+	},
 }
