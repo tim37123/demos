@@ -39,8 +39,10 @@ export const Chat = {
 		firebaseDB.ref('participants/' + participant.uid).remove();
 	},
 	getParticipantsRef: () => {
-		var partipantRef = firebase.database().ref('participants/');
-		return partipantRef;
+		return firebaseDB.ref('participants/');
+	},
+	getMessagesRef: () => {
+		return firebaseDB.ref('messages/');
 	},
 	addMessage: message => {
 		const messageRef = firebaseDB.ref('messages/');

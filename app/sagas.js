@@ -137,6 +137,14 @@ export function* addMessage(message){
     yield put({type: 'ADD_MESSAGE', message: message});
 }
 
+export function* watchUpdateMessages(){
+    yield* takeEvery('UPDATE_MESSAGES_ASYNC', updateMessages);
+}
+
+export function* updateMessages(messageList){
+    yield put({type: 'UPDATE_MESSAGES', messages: messageList});   
+}
+
 export default function* rootSaga() {
   yield [
     watchAddTodo(),
@@ -149,6 +157,7 @@ export default function* rootSaga() {
     watchDeleteParticipant(),
     watchUpdateParticipents(),
     watchAddMessage(),
+    watchUpdateMessages(),
     // watchPeerConnect(),
     // watchGetUserAgent()
   ]

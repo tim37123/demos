@@ -15,7 +15,9 @@ class ChatContainer extends Component {
         this.props.history.pushState(null, `/`);
       }else{
         const participantRef = Chat.getParticipantsRef()
+        const messagesRef = Chat.getMessagesRef()
         this.watchParticipantsChanged(participantRef)
+        this.watchMessagesChanged(messagesRef)
       }
   }
 
@@ -41,6 +43,15 @@ class ChatContainer extends Component {
       this.props.dispatch({type:'UPDATE_PARTICIPANTS_ASYNC', participants: snapshot.val()})
     });
     console.log('Participants listener activated');
+  }
+
+  watchMessagesChanged(messagesRef){
+    messagesRef.on('value', (snapshot) => {
+      console.log('SNAPSHOT VAL');
+      console.log(snapshot.val());
+      this.props.dispatch({type:'UPDATE_MESSAGES_ASYNC', messages: snapshot.val()})
+    });
+    console.log('Messages listener activated');
   }
 
   getDataConnection(){
