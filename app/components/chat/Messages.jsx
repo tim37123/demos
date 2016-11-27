@@ -15,9 +15,19 @@ export default class Messages extends Component {
       overflowY: 'scroll',
       backgroundColor: '#F8F8FF'
     };
+
+    const listStyle = {
+      listStyleType: 'none'
+    };
+
+    const messages = Object.keys(this.props.messageList).map((message, index) =>
+                            <li style={listStyle} key={message}>{this.props.messageList[message].body}</li>
+                          );
+
     return(
       <div style={divStyle}>
         This is the messages component.
+        {messages}
       </div>
     );
   }

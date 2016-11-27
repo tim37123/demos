@@ -73,7 +73,7 @@ class ChatContainer extends Component {
         <button onClick={this.getUserAgent.bind(this)}>GetUserAgent</button>
         <div className="row">
               <div className="col-sm-9">
-                <Messages/>
+                <Messages messageList={this.props.chat.messages}/>
               </div>
               <div className="col-sm-3">
                 <Participants participantList={this.props.chat.participants} />
