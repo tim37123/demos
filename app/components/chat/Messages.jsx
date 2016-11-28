@@ -16,17 +16,25 @@ export default class Messages extends Component {
       backgroundColor: '#F8F8FF'
     };
 
-    const listStyle = {
+    const listStyleCurrentUser = {
+      listStyleType: 'none',
+      backgroundColor: '#A9A9A9'
+    };
+
+    const listStyleNotCurrentUser = {
       listStyleType: 'none'
     };
 
-    const messages = Object.keys(this.props.messageList).map((message, index) =>
-                            <li style={listStyle} key={message}>{this.props.messageList[message].body}</li>
-                          );
+    const messages = Object.keys(this.props.messageList).map(function(message, index){
+                                if(this.props.currentUser == this.props.messageList[message].poster){ 
+                                  return <li style={listStyleCurrentUser} key={message}><strong>{this.props.messageList[message].poster}</strong> : {this.props.messageList[message].body}</li>
+                                }else{ 
+                                  return <li style={listStyleNotCurrentUser} key={message}><strong>{this.props.messageList[message].poster}</strong> : {this.props.messageList[message].body}</li>
+                                }
+                              }.bind(this));
 
     return(
       <div style={divStyle}>
-        This is the messages component.
         {messages}
       </div>
     );

@@ -5,12 +5,6 @@ export default class Participants extends Component {
 		super(props);
 	}
 
-  componentWillMount(){
-    console.log("PARTICIPANT PROPS");
-    console.log(typeof(this.props.participantList));
-    console.log(this.props.participantList);
-  }
-
   render() {
     const divStyle = {
       display: 'block',

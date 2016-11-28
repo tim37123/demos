@@ -11,6 +11,8 @@ class ChatContainer extends Component {
 	}
 
   componentWillMount(){
+    console.log('CHAT CONTAINER');
+    console.log(this.props.registration.user.email);
   	if(!this.props.registration.user){
         this.props.history.pushState(null, `/`);
       }else{
@@ -39,7 +41,6 @@ class ChatContainer extends Component {
   // or look at firebase-sagas that may have a library to solve this
   watchParticipantsChanged(participantsRef){
     participantsRef.on('value', (snapshot) => {
-      console.log('in the participants listener');
       this.props.dispatch({type:'UPDATE_PARTICIPANTS_ASYNC', participants: snapshot.val()})
     });
     console.log('Participants listener activated');
@@ -47,8 +48,6 @@ class ChatContainer extends Component {
 
   watchMessagesChanged(messagesRef){
     messagesRef.on('value', (snapshot) => {
-      console.log('SNAPSHOT VAL');
-      console.log(snapshot.val());
       this.props.dispatch({type:'UPDATE_MESSAGES_ASYNC', messages: snapshot.val()})
     });
     console.log('Messages listener activated');
@@ -69,11 +68,9 @@ class ChatContainer extends Component {
     return(
       <div className="container" style={divStyle}>
         <h3>Welcome to the chat!</h3>
-        <button onClick={this.getPeerConnection.bind(this)}>Peer</button>
-        <button onClick={this.getUserAgent.bind(this)}>GetUserAgent</button>
         <div className="row">
               <div className="col-sm-9">
-                <Messages messageList={this.props.chat.messages}/>
+                <Messages messageList={this.props.chat.messages} currentUser={this.props.registration.user.email}/>
               </div>
               <div className="col-sm-3">
                 <Participants participantList={this.props.chat.participants} />
