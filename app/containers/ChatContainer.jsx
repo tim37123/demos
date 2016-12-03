@@ -11,8 +11,6 @@ class ChatContainer extends Component {
 	}
 
   componentWillMount(){
-    console.log('CHAT CONTAINER');
-    console.log(this.props.registration.user.email);
   	if(!this.props.registration.user){
         this.props.history.pushState(null, `/`);
       }else{
@@ -73,7 +71,7 @@ class ChatContainer extends Component {
                 <Messages messageList={this.props.chat.messages} currentUser={this.props.registration.user.email}/>
               </div>
               <div className="col-sm-3">
-                <Participants participantList={this.props.chat.participants} />
+                <Participants participantList={this.props.chat.participants} currentUser={this.props.registration.user.email}/>
               </div>
               <div className="col-sm-9">
                 <Post addMessage={this.addMessage.bind(this)}/>

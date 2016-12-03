@@ -30,13 +30,31 @@ export const Auth = {
 }
 
 export const Chat = {
-	addParticipant: participant => {
-		var newParticipant = {};
-		newParticipant['/participants/' + participant.user.uid] = participant.user.email;
-		return firebaseDB.ref().update(newParticipant);
+	addParticipantOrLogin: participant => {
+		firebaseDB.ref('participants/').child(participant.user.uid).once('value', function(snapshot){
+			if(snapshot.val() != null){
+				firebaseDB.ref('participants/' + participant.user.uid).update({
+					'/present': true
+				})
+			}else{
+				var newParticipant = {};
+				newParticipant['/participants/' + participant.user.uid] = {email: participant.user.email, username: '', phone: '', present: true};
+				firebaseDB.ref().update(newParticipant);
+			}
+		});
 	},
-	deleteParticipant: participant => {
-		firebaseDB.ref('participants/' + participant.uid).remove();
+	logoutParticipant: participant => {
+		console.log("LOGOUT")
+		console.log(participant)
+		firebaseDB.ref('participants/' + participant.uid).update({
+			'/present': false
+		})
+	},
+	checkParticipant: (key) => {
+		const partRef =  firebaseDB.ref('participants/');
+		partRef.once("value", function(data) {
+		  return data;
+		});
 	},
 	getParticipantsRef: () => {
 		return firebaseDB.ref('participants/');

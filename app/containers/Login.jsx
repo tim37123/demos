@@ -24,12 +24,12 @@ export class Login extends Component {
             <h1>Login</h1>
             <p>With your email and password</p>
             <div className="form-group">
-              <label htmlFor="exampleInputEmail1">Email address</label>
+              <label htmlFor="inputEmail">Email address</label>
               <input type="email" className="form-control" ref="inputEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
               <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Password</label>
+              <label htmlFor="inputPassword">Password</label>
               <input type="password" className="form-control" ref="inputPassword" placeholder="Password"/>
             </div>
             <button type="submit" className="btn btn-primary" onClick={this.login.bind(this)}>Submit</button>

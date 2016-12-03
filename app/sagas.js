@@ -53,13 +53,13 @@ export function* logout(action){
     if(error){
         yield put({type: 'LOGOUT_FAILED', message: {msg_type: 'error', msg_body: error.message}})
     }else{
-        yield put({type: 'DELETE_PARTICIPANT_ASYNC', action});
+        yield put({type: 'LOGOUT_PARTICIPANT_ASYNC', action});
         yield put({type: 'LOGOUT'});
     }
 }
 
 export function* watchLogin(){
-	yield* takeEvery('LOGIN_USER_ASYNC', login_and_register)
+	yield* takeEvery('LOGIN_USER_ASYNC', login_and_register);
 }
 
 export function* login_and_register(action){
@@ -68,56 +68,26 @@ export function* login_and_register(action){
         yield put({type: 'LOGIN_FAILED', message: {msg_type: 'error', msg_body: error.message}})
     }else{
         yield put({type: 'LOGIN', user});
-        // yield put({type: 'GET_USER_AGENT_ASYNC', user})
         yield put({type: 'ADD_PARTICIPANT_ASYNC', user})
     }
 }
 
-/*
-*********************************************************************** RTC
-*/
-// export function* watchPeerConnect(){
-//     yield* takeEvery('PEER_CONNECT_ASYNC', peerConnect)
-// }
-
-// export function* peerConnect(){
-//     let peerConnection = rtcUtils.buildPeerConnection();
-//     let dataConnection = rtcUtils.buildDataConnection(peerConnection);
-//     yield put({type: "SET_PEER_CONNECTION", connection: {peerConnection: peerConnection, dataConnection: dataConnection}})
-// }
-
-// export function* watchGetUserAgent(){
-//     yield* takeEvery('GET_USER_AGENT_ASYNC', getUserAgent)
-// }
-
-// export function* getUserAgent(login_obj){
-//     const email = login_obj.user.email;
-//     const sip_reg_name = email.substr(0, email.indexOf('@'));
-//     let UA = rtcUtils.createUserAgent(sip_reg_name);
-//     yield put({type: 'SET_USER_AGENT', agent: UA});
-//     // yield put({type: 'SET_PARTICIPANT_ASYNC', participant: sip_reg_name})
-// }
-
-/*
-*********************************************************************** Chat
-*/
-
 export function* watchAddParticipant(){
-    yield* takeEvery('ADD_PARTICIPANT_ASYNC', addParticipant)
+    yield* takeEvery('ADD_PARTICIPANT_ASYNC', addParticipantOrLogin)
 }
 
-export function* addParticipant(participant){
-    Chat.addParticipant(participant);
+export function* addParticipantOrLogin(participant){
+    Chat.addParticipantOrLogin(participant);
     yield put({type: 'ADD_PARTICIPANT', participant: participant});
 }
 
-export function* watchDeleteParticipant(){
-    yield* takeEvery('DELETE_PARTICIPANT_ASYNC', deleteParticipant)
+export function* watchLogoutParticipant(){
+    yield* takeEvery('LOGOUT_PARTICIPANT_ASYNC', logoutParticipant)
 }
 
-export function* deleteParticipant(participant){
-    Chat.deleteParticipant(participant.action.action);
-    yield put({type: 'DELETE_PARTICIPANT'});
+export function* logoutParticipant(participant){
+    Chat.logoutParticipant(participant.action.action);
+    yield put({type: 'LOGOUT_PARTICIPANT'});
 }
 
 export function* watchUpdateParticipents(){
@@ -154,7 +124,7 @@ export default function* rootSaga() {
     watchClearUser(),
     watchLogin(),
     watchAddParticipant(),
-    watchDeleteParticipant(),
+    watchLogoutParticipant(),
     watchUpdateParticipents(),
     watchAddMessage(),
     watchUpdateMessages(),
