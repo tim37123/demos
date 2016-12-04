@@ -22,10 +22,16 @@ export default class Participants extends Component {
     };
 
     const participants = Object.keys(this.props.participantList).map(function(participant, index){
+                            let emailOrUsername = this.props.participantList[participant].username || this.props.participantList[participant].email;
+
                             if(this.props.currentUser == this.props.participantList[participant].email){ 
-                              return <li style={listStyle} key={participant} data-toggle="modal" data-target="#myModal"><strong>{this.props.participantList[participant].email}</strong></li>
-                            }else{ 
-                              return <li style={listStyle} key={participant}>{this.props.participantList[participant].email}</li>
+                              return <li style={listStyle} key={participant} data-toggle="modal" data-target="#myModal"><strong>{emailOrUsername}</strong></li>
+                            }else{
+                              if(this.props.participantList[participant].present == false){
+                                return <li style={listStyle} key={participant}><i>{emailOrUsername}</i></li>
+                              } else{
+                                return <li style={listStyle} key={participant}>{emailOrUsername}</li>
+                              }
                             }
                           }.bind(this));
 
@@ -34,7 +40,7 @@ export default class Participants extends Component {
         <ul>
           <h4>Current Participants</h4>
           {participants}
-          <UserInfoModal/>
+          <UserInfoModal userUpdate={this.props.userUpdate}/>
         </ul>
       </div>
     );

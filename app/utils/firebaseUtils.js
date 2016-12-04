@@ -59,6 +59,14 @@ export const Chat = {
 	getParticipantsRef: () => {
 		return firebaseDB.ref('participants/');
 	},
+	updateUserInfo: info => {
+		info = info.info
+		const userInfoRef = firebaseDB.ref('participants/' + info.uid);
+		userInfoRef.update({
+			'/username': info.userUpdateInfo.userName,
+			'/phone': info.userUpdateInfo.phone
+		})
+	},
 	getMessagesRef: () => {
 		return firebaseDB.ref('messages/');
 	},

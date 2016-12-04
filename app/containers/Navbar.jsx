@@ -12,12 +12,14 @@ export class Navbar extends Component {
 	}
 
 	render(){
-		let loginLogout, chatLink;
+		let loginLogout, chatLink, registerLink;
 		if(this.props.user){
 			loginLogout = <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
 			chatLink = <li><Link to={`/chat`}>Chat</Link></li>
+			registerLink = ''
 		}else{
 			loginLogout = <li><Link to={`/login`}>Login</Link></li>
+			registerLink = <li><Link to={`/register`}>Register</Link></li>
 			chatLink = ''
 		}
 
@@ -35,6 +37,7 @@ export class Navbar extends Component {
 					        <li><a href="#">Link</a></li>
 					        {loginLogout}
 					        {chatLink}
+					        {registerLink}
 					      </ul>
 					      <ul className="nav navbar-nav navbar-right">
 					        <li><a href="#">Link</a></li>

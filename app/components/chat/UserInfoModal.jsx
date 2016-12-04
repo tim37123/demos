@@ -8,9 +8,7 @@ export default class Participants extends Component {
   setInfo(){
     let userName = this.refs.inputUsername
     let phone = this.refs.inputPhone
-    console.log('thisInfo Clicked');
-    console.log(userName.value);
-    console.log(phone.value);
+    this.props.userUpdate({userName: userName.value, phone: phone.value})
     userName.value = '';
     phone.value = '';
   }

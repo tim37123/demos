@@ -51,6 +51,11 @@ class ChatContainer extends Component {
     console.log('Messages listener activated');
   }
 
+  updateUserInfo(data){
+    const payload = {userUpdateInfo: data, uid: this.props.registration.user.uid}
+    this.props.dispatch({type: 'UPDATE_USER_INFO_ASYNC', info: payload})
+  }
+
   getDataConnection(){
     let dataConnectData = rtc.buildDataConnection()
     console.log('Getting RTC Data Connection') 
@@ -71,7 +76,7 @@ class ChatContainer extends Component {
                 <Messages messageList={this.props.chat.messages} currentUser={this.props.registration.user.email}/>
               </div>
               <div className="col-sm-3">
-                <Participants participantList={this.props.chat.participants} currentUser={this.props.registration.user.email}/>
+                <Participants participantList={this.props.chat.participants} currentUser={this.props.registration.user.email} userUpdate={this.updateUserInfo.bind(this)}/>
               </div>
               <div className="col-sm-9">
                 <Post addMessage={this.addMessage.bind(this)}/>
