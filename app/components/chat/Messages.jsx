@@ -12,13 +12,14 @@ export default class Messages extends Component {
       height: '470px',
       borderWidth: '3px',
       borderRadius: '5px',
-      overflowY: 'scroll',
-      backgroundColor: '#F8F8FF'
+      overflow: 'hidden',
+      backgroundColor: '#F8F8FF',
     };
 
     const listStyleCurrentUser = {
       listStyleType: 'none',
-      backgroundColor: '#A9A9A9'
+      backgroundColor: '#A9A9A9',
+      textAlign: 'right'
     };
 
     const listStyleNotCurrentUser = {

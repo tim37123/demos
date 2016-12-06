@@ -62,15 +62,20 @@ class ChatContainer extends Component {
   }
 
   render() {
+    const imgUrl = 'http://revelwallpapers.net/d/303568306C582D747A644F596C7053486B3271643465444E7A6274376C413D3D/minimalistic-science-fiction-art-color-dark-background.jpg';
     var divStyle = {
-      backgroundColor: '#D3D3D3',
+      backgroundImage: 'url(' + imgUrl + ')',
       display: 'block',
       height: '600px'
     }
 
+    var headerStyle = {
+      color: 'white'
+    }
+
     return(
       <div className="container" style={divStyle}>
-        <h3>Welcome to the chat!</h3>
+        <h3 style={headerStyle}>Welcome to the chat!</h3>
         <div className="row">
               <div className="col-sm-9">
                 <Messages messageList={this.props.chat.messages} currentUser={this.props.registration.user.email}/>
