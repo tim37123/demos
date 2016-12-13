@@ -27,10 +27,12 @@ export default class Messages extends Component {
     };
 
     const messages = Object.keys(this.props.messageList).map(function(message, index){
-                                if(this.props.currentUser == this.props.messageList[message].poster){ 
-                                  return <li style={listStyleCurrentUser} key={message}><strong>{this.props.messageList[message].poster}</strong> : {this.props.messageList[message].body}</li>
+                                let usernameOrEmail = this.props.messageList[message].username || this.props.messageList[message].poster;
+
+                                if(this.props.currentUser.email == this.props.messageList[message].poster){
+                                  return <li style={listStyleCurrentUser} key={message}><strong>{usernameOrEmail}</strong> : {this.props.messageList[message].body}</li>
                                 }else{ 
-                                  return <li style={listStyleNotCurrentUser} key={message}><strong>{this.props.messageList[message].poster}</strong> : {this.props.messageList[message].body}</li>
+                                  return <li style={listStyleNotCurrentUser} key={message}><strong>{usernameOrEmail}</strong> : {this.props.messageList[message].body}</li>
                                 }
                               }.bind(this));
 

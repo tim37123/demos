@@ -30,7 +30,7 @@ class ChatContainer extends Component {
   }
 
   addMessage(msg){
-    const chatMessage = {body: msg, timestamp: Date.now(), poster: this.props.registration.user.email}
+    const chatMessage = {body: msg, timestamp: Date.now(), poster: this.props.registration.user.email, username: this.props.chat.participants[this.props.registration.user.uid].username}
     this.props.dispatch({type: 'ADD_MESSAGE_ASYNC', msg: chatMessage})
   }
 
@@ -78,7 +78,7 @@ class ChatContainer extends Component {
         <h3 style={headerStyle}>Welcome to the chat!</h3>
         <div className="row">
               <div className="col-sm-9">
-                <Messages messageList={this.props.chat.messages} currentUser={this.props.registration.user.email}/>
+                <Messages messageList={this.props.chat.messages} currentUser={this.props.chat.participants[this.props.registration.user.uid]}/>
               </div>
               <div className="col-sm-3">
                 <Participants participantList={this.props.chat.participants} currentUser={this.props.registration.user.email} userUpdate={this.updateUserInfo.bind(this)}/>
