@@ -8,6 +8,7 @@ import About from './components/About';
 import Todos from './containers/Todos';
 import Login from './containers/Login';
 import Chat from './containers/ChatContainer';
+import Stocks from './containers/d3_stocks/StockContainer';
 import Home from './components/Home';
 import DevTools from './containers/DevTools';
 import {store, history} from './redux-router-init';
@@ -25,6 +26,7 @@ ReactDOM.render(
 				<Route path="/register" component={Register}/>
 				<Route path="/login" component={Login}/>
 				<Route path="/chat" component={Chat}/>
+				<Route path="/stocks" component={Stocks}/>
 			</Route>
 		</Router>
 		{ DEVELOPMENT ? <DevTools/> : ''}
