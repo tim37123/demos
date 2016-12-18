@@ -11,16 +11,18 @@ class Alert extends Component {
   }
 
   render() {
-    const msgList = this.props.alerts
-    const msgs = msgList.map(function(msgDeets, index){
-      const alertType = "alert alert-" + msgDeets.type;
-      return <div className={alertType} role="alert" key={index}>
-                <button type="button" className="close" onClick={this.dismissAlert.bind(this, index)}>
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <strong>Oh snap!</strong> {msgDeets.msg}
-              </div>
-    }.bind(this));
+    let msgs = '';
+    if(this.props.alerts){
+        msgs = this.props.alerts.map(function(msgDeets, index){
+          const alertType = "alert alert-" + msgDeets.type;
+          return <div className={alertType} role="alert" key={index}>
+                    <button type="button" className="close" onClick={this.dismissAlert.bind(this, index)}>
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Oh snap!</strong> {msgDeets.msg}
+                  </div>
+        }.bind(this));
+    }
 
     return(
       <div className="container">
