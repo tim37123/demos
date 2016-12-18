@@ -35,12 +35,12 @@ export class Navbar extends Component {
 					      <ul className="nav navbar-nav">
 					        <li><a href="#">Link</a></li>
 					        <li><a href="#">Link</a></li>
-					        {loginLogout}
+					        <li><Link to={`/stocks`}>Stocks</Link></li>
 					        {chatLink}
 					        {registerLink}
 					      </ul>
 					      <ul className="nav navbar-nav navbar-right">
-					        <li><a href="#">Link</a></li>
+					        {loginLogout}
 					      </ul>
 					    </div>
 				  </div>

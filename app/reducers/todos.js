@@ -8,9 +8,3 @@ export default (state = Immutable.List(['Code More!']), action) => {
       return state
   }
 }
-
-// example of how to navigate via redux action:
-// import {routerMiddleware, push} from 'react-router-redux'
-// function createFooAction() {
-//     return push('/foo);
-// }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import StockChart from '../../components/d3_stocks/StockChart';
+import NewChartForm from '../../components/d3_stocks/NewChartForm';
 // import {connect} from 'react-redux'
 
 export default class StockContainer extends Component {
@@ -12,10 +13,19 @@ export default class StockContainer extends Component {
       <div className="container">
         <h3>Welcome!</h3>
         <div className="row">
-              <div className="col-sm-12">
-                This is the stock container
-              </div>
-              <StockChart/>
+          <div className="col-sm-12">
+            This is the stock container
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <NewChartForm/>
+          </div>          
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <StockChart/>
+          </div>
         </div>
       </div>
     );

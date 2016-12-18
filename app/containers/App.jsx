@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import Navbar from '../containers/Navbar'
 import {Auth} from '../utils/firebaseUtils';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import Alerts from './Alerts';
 
 class App extends Component {
 	constructor(props){
@@ -23,6 +24,7 @@ class App extends Component {
   render() {
     return(
       <div>
+        <Alerts/>
         <Navbar/>
         {this.props.children}
       </div>
