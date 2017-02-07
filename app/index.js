@@ -29,7 +29,7 @@ ReactDOM.render(
 				<Route path="/stocks" component={Stocks}/>
 			</Route>
 		</Router>
-		{ DEVELOPMENT ? <DevTools/> : ''}
+		{       DEVELOPMENT ? <DevTools/> : ''       }
 		</div>
 	</Provider>,
 	document.getElementById('root')

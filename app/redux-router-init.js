@@ -16,6 +16,7 @@ import registrationReducer from './reducers/registration';
 import rtcReducer from './reducers/rtc_reducer';
 import chatReducer from './reducers/chat_reducer';
 import alertsReducer from './reducers/alerts_reducer';
+import stockReducer from './reducers/stockReducer';
 
 ////////////////////////////////////////////////
 
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     registration: registrationReducer,
     rtcReducer: rtcReducer,
     chat: chatReducer,
-    alerts: alertsReducer
+    alerts: alertsReducer,
+    stocks: stockReducer
 })
 
 // const initialState = Immutable.List(['Code More!']);

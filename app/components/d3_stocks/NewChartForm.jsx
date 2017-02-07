@@ -21,32 +21,8 @@ export default class NewChartForm extends Component {
       <div className="form-group row col-sm-12">
         <form>
           <div className="form-group col-sm-4">
-            <label htmlFor="formGroupExampleInput">Symbol</label>
+            <label htmlFor="formGroupExampleInput">What stock do you want to see? (Symbol)</label>
             <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Example input"/>
-          </div>
-          <div className="form-group col-sm-4">
-            <label htmlFor="selectGroup">Period</label>
-            <select className="form-control" id="selectGroup">
-              <option>Minute</option>
-              <option>Hour</option>
-              <option>Day</option>
-              <option>Week</option>
-              <option>Month</option>
-              <option>Quarter</option>
-              <option>Year</option>
-            </select>
-          </div>
-          <div className="form-group col-sm-4">
-            <label htmlFor="formGroupExampleInput2">Data Interval</label>
-            <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Another input"/>
-          </div>
-          <div className="form-group col-sm-4">
-            <label htmlFor="example-date-input">Start Date</label>
-            <input className="form-control" type="date" defaultValue="Date" id="start-date-input"/>
-          </div>
-          <div className="form-group col-sm-4">
-            <label htmlFor="example-date-input">End Date</label>
-            <input className="form-control" type="date" id="end-date-input"/>
           </div>
           <div className="col-sm-4">
             <button className="btn btn-primary" onClick={this.addStock}>Add Symbol</button>
